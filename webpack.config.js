@@ -1,8 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
+	// runtimeCompiler: true,
 	mode: 'development',
 	devtool: 'source-map',
     entry: './src/index.js',
@@ -25,6 +27,10 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.vue$/,
+				loader: 'vue-loader'
+			},
+			{
 				test: /\.m?js$/,
 				exclude: /(node_modules|bower_components)/,
 				use: {
@@ -37,22 +43,24 @@ module.exports = {
 			{
 				test: /\.(css)/,
 				use: [
-					MiniCssExtractPlugin.loader,
-					{
-						loader: 'css-loader',
-						options: {
-							importLoaders: 1,
-							modules: true,
-							sourceMap: true
-						}
-					},
-					{
-					    loader: 'postcss-loader',
-					    options: {
-							config: { path: './postcss.config.js' },
-					        sourceMap: true
-					    }
-					},
+					'vue-style-loader',
+					'css-loader'
+					// MiniCssExtractPlugin.loader,
+					// {
+					// 	loader: 'css-loader',
+					// 	options: {
+					// 		importLoaders: 1,
+					// 		modules: true,
+					// 		sourceMap: true
+					// 	}
+					// },
+					// {
+					//     loader: 'postcss-loader',
+					//     options: {
+					// 		config: { path: './postcss.config.js' },
+					//         sourceMap: true
+					//     }
+					// },
 				]
 			},
 			{
@@ -72,6 +80,7 @@ module.exports = {
 		new HtmlWebpackPlugin({template: './public/index.html'}),
 		new MiniCssExtractPlugin({
         	filename: '[name].css'
-		})
+		}),
+		new VueLoaderPlugin()
 	]
 }
