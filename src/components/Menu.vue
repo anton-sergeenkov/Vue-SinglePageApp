@@ -40,5 +40,6 @@ export default {
     border-radius: 3px;
     color: black;
     text-decoration: none;
+    user-select: none;
 }
 </style>

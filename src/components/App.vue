@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <app-menu></app-menu>
         <router-view></router-view>
     </div>
@@ -41,8 +41,11 @@ body {
     font-family: sans-serif;
     line-height: 1.5;
 }
+.container {
+    padding-top: 15px;
+}
 .wrapper {
-    max-width: 1920px;
+    max-width: 1200px;
     margin: auto;
     display: flex;
     padding: 30px;
