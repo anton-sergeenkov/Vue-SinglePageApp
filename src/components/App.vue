@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <app-menu></app-menu>
+        <app-menu />
         <router-view></router-view>
     </div>
 </template>
@@ -52,15 +52,18 @@ body {
     flex-wrap: wrap;
 }
 h1 {
+    width: 100%;
     color: var(--color-dark);
     font-size: var(--font-h1);
 }
 h2 {
+    width: 100%;
     font-weight: normal;
     color: var(--color-dark);
     font-size: var(--font-h2);
 }
 h3 {
+    width: 100%;
     color: var(--color-dark);
     font-size: var(--font-main);
     margin: 5px 0;
