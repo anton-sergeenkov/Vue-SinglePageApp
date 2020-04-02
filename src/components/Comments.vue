@@ -2,7 +2,7 @@
     <div class="comments-wrapper">
         <h2>Комментарии</h2>
 
-        <div class="comments-container" v-for="(item, i) in commentsContent" :key="i">
+        <div class="comments-container" v-for="(item, i) in getComments" :key="i">
             <p class="comments-user">{{item.user}}</p>
             <p class="comments-date">{{item.date}}</p>
             <p class="comments-text">{{item.text}}</p>
@@ -13,23 +13,29 @@
 </template>
 
 <script>
-import ErrorApi from './ErrorApi.vue';
+import { mapGetters, mapActions } from 'vuex'
 import { fetchComment } from '../api/articleService';
+import ErrorApi from './ErrorApi.vue';
 
 export default {
     components: {
         'app-error-api': ErrorApi
     },
+    computed: {
+        ...mapGetters(['getComments'])
+    },
+    methods: {
+        ...mapActions(['setComments'])
+    },
     data() {
         return {
-            commentsContent: [],
             articleError: false,
         };
     },
     created() {
         fetchComment()
             .then(res => res.json())
-            .then(data => this.commentsContent = data)
+            .then(data => this.setComments(data))
             .catch(error => this.articleError = true)
     }
 }
