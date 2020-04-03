@@ -6,23 +6,30 @@
             label="Новый комментарий"
             theme="primary"
         />
-        <ui-input
-            class="input-comment"
-            v-model="inputName"
-            label="Имя пользователя"
-        />
-        <ui-input
-            class="input-comment"
-            v-model="inputComment"
-            label="Текст комментария"
-            multiline
-        />
-        <ui-button
-            class="btn-comment-add"
-            @click.native="handlerCommentSubmit"
-            label="Добавить комментарий"
-            theme="primary"
-        />
+
+        <div v-if="showForm">
+            <ui-input
+                class="input-comment"
+                v-model="inputName"
+                label="Имя пользователя*"
+            />
+            <ui-input
+                class="input-comment"
+                v-model="inputComment"
+                label="Текст комментария*"
+                multiline
+            />
+            <ui-button
+                class="btn-comment-add"
+                @click.native="handlerCommentSubmit"
+                label="Добавить комментарий"
+                theme="primary"
+            />
+        </div>
+
+        <ui-toast v-if="showWarning" theme="warning" @close="closeWarning">
+            Заполните все обязательные поля
+        </ui-toast>
     </div>
 </template>
 
@@ -33,15 +40,24 @@ export default {
     data() {
         return {
             inputName: '',
-            inputComment: ''
+            inputComment: '',
+            showForm: false,
+            showWarning: false
         }
     },
     methods: {
+        closeWarning() {
+            this.showWarning = false;
+        },
         handlerCommentAdd() {
-            alert('handlerCommentAdd');
+            this.showForm = true;
         },
         handlerCommentSubmit() {
-            alert('handlerCommentSubmit');
+            if (this.inputName && this.inputComment) {
+                this.showForm = false;
+            } else {
+                this.showWarning = true;
+            }
         },
     }
 }
