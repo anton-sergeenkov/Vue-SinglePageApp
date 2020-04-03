@@ -11,7 +11,7 @@ import Menu from './Menu.vue';
 export default {
     components: {
         'app-menu': Menu
-    }
+    },
 }
 </script>
 
@@ -42,11 +42,11 @@ body {
     line-height: 1.5;
 }
 .wrapper {
+    display: flex;
+    flex-wrap: wrap;
     max-width: 1200px;
     margin: auto;
-    display: flex;
     padding: 30px;
-    flex-wrap: wrap;
 }
 h1 {
     width: 100%;
