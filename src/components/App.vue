@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="app-wrapper">
         <app-menu />
         <router-view></router-view>
     </div>
@@ -22,7 +22,6 @@ export default {
     --color-accent-dark: #e9c057;
     --color-medium:      #4b778e;
     --color-dark:        #304a58;
-    --font-small:        14px;
     --font-main:         16px;
     --font-h1:           23px;
     --font-h2:           21px;
@@ -41,9 +40,6 @@ body {
     font-size: var(--font-main);
     font-family: sans-serif;
     line-height: 1.5;
-}
-.container {
-    padding-top: 15px;
 }
 .wrapper {
     max-width: 1200px;
@@ -68,5 +64,11 @@ h3 {
     color: var(--color-dark);
     font-size: var(--font-main);
     margin: 5px 0;
+}
+</style>
+
+<style scoped>
+.app-wrapper {
+    padding-top: 15px;
 }
 </style>

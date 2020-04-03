@@ -1,5 +1,5 @@
 <template>
-    <div class="input-text">
+    <div class="input-wrapper">
         <input
             v-if="!multiline"
             @input="$emit('input', $event.target.value)" 
@@ -27,12 +27,12 @@
 export default {
     data() {
         return {
-            focused: false
+            focused: false,
         }
     },
     props: {
-        label:     { type: String },
-        type:      { type: String, default: 'text' },
+        label: { type: String },
+        type: { type: String, default: 'text' },
         multiline: { type: Boolean, default: false },
     },
     methods: {
@@ -43,7 +43,7 @@ export default {
             if (content === '') {
                 this.focused = false;
             }
-        }
+        },
     },
     computed: {
         classes() {
@@ -51,16 +51,16 @@ export default {
                 ['active']: this.focused
             };
         },
-    }
+    },
 }
 </script>
 
 <style scoped>
-.input-text {
+.input-wrapper {
     --color-default: #6e6e6e;
     --color-accent: #4b778e;
 }
-.input-text {
+.input-wrapper {
     position: relative;
     width: 100%;
 }
@@ -90,13 +90,11 @@ label {
     color: var(--color-default);
     transition: 0.4s;
 }
-
 label.active {
     top: -30px;
     font-size: 12px;
     color: var(--color-accent);
 }
-
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 

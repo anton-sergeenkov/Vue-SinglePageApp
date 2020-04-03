@@ -1,16 +1,17 @@
 <template>
     <div class="wrapper">
         <h2>{{articleHeader}}</h2>
-        <p v-for="(item, i) in articleContent" :key="i">{{item}}</p>
+        <p class="text" v-for="(item, i) in articleContent" :key="i">{{item}}</p>
         <app-error-api v-if="articleError" />
         <app-comments />
     </div>
 </template>
 
 <script>
+import { fetchArticle } from '../api/articleService';
+
 import Comments from '../components/Comments/Comments.vue';
 import ErrorApi from '../components/ErrorApi.vue';
-import { fetchArticle } from '../api/articleService';
 
 export default {
     components: {
@@ -32,12 +33,12 @@ export default {
                 this.articleContent = content;
             })
             .catch(error => this.articleError = true)
-    }
+    },
 }
 </script>
 
 <style scoped>
-p::first-letter {
+.text::first-letter {
     font-size: var(--font-h2);
     font-weight: bold;
     color: var(--color-accent-dark);

@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div :class="classes" class="ui-toast" @click="$emit('close')">
+        <div :class="classes" class="toast" @click="$emit('close')">
             <slot></slot>
         </div>
     </transition>
@@ -9,15 +9,15 @@
 <script>
 export default {
     props: {
-        theme:    { type: String, default: 'primary' },
+        theme: { type: String, default: 'primary' },
         position: { type: String, default: 'left-bottom' },
-        duration: { type: Number, default: 3500 }
+        duration: { type: Number, default: 3500 },
     },
     computed: {
         classes() {
             return {
-                ['ui-toast--'+this.theme]: true, 
-                ['ui-toast--'+this.position]: true
+                ['toast--'+this.theme]: true, 
+                ['toast--'+this.position]: true
             };
         }
     },
@@ -25,16 +25,16 @@ export default {
         setTimeout(() => { 
             this.$emit('close');
         }, this.duration);
-    }
+    },
 }
 </script>
 
 <style scoped>
-.ui-toast {
+.toast {
     position: fixed;
+    z-index: 200;
     max-width: 80%;
     padding: 15px 20px;
-    z-index: 200;
     font-size: 14px;
     text-align: center;
     cursor: pointer;
@@ -42,49 +42,46 @@ export default {
     color: #fff;
     border-top: 4px solid rgba(0,0,0,0.12);
 }
-
 /*----------------------------------------
 THEME 
 ----------------------------------------*/
-.ui-toast--primary {
-    background: rgba(0,0,0,0.7);
+.toast--primary {
+    background-color: rgba(0,0,0,0.7);
 }
-.ui-toast--success {
-    background: #4caf50;
+.toast--success {
+    background-color: #4caf50;
 }
-.ui-toast--info {
-    background: #2196f3;
+.toast--info {
+    background-color: #2196f3;
 }
-.ui-toast--warning {
-    background: #fb8c00;
+.toast--warning {
+    background-color: #fb8c00;
 }
-.ui-toast--error {
-    background: #ff5252;
+.toast--error {
+    background-color: #ff5252;
 }
-
 /*----------------------------------------
 POSITION 
 ----------------------------------------*/
-.ui-toast--top {
+.toast--top {
     top: 50px;
     left: 50%;
     transform: translateX(-50%);
 }
-.ui-toast--center {
+.toast--center {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
 }
-.ui-toast--bottom {
+.toast--bottom {
     bottom: 50px;
     left: 50%;
     transform: translateX(-50%); 
 }
-.ui-toast--left-bottom {
+.toast--left-bottom {
     bottom: 25px;
     left: 25px;
 }
-
 /*----------------------------------------
 TRANSITION 
 ----------------------------------------*/

@@ -16,7 +16,7 @@ export default {
                 ['button--block']: this.block
             };
         }
-    }
+    },
 }
 </script>
 
@@ -48,7 +48,6 @@ export default {
 .button--primary, .button--secondary {
     font-weight: bold;
 }
-
 .button--block {
     width: 100%;
 }
