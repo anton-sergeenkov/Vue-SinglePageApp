@@ -1,6 +1,7 @@
 <template>
     <div>
         <ui-button
+            v-if="getUser.authorized"
             class="btn-comment-new"
             @click.native="handlerCommentAdd"
             label="Новый комментарий"
@@ -8,11 +9,6 @@
         />
 
         <div v-if="showForm">
-            <ui-input
-                class="input-comment"
-                v-model="inputName"
-                label="Имя пользователя*"
-            />
             <ui-input
                 class="input-comment"
                 v-model="inputComment"
@@ -40,14 +36,14 @@ import { getCurrentDate } from '../utils/getCurrentDate';
 export default {
     data() {
         return {
-            inputName: '',
             inputComment: '',
             showForm: false,
             showWarning: false
         }
     },
     computed: {
-        ...mapGetters(['getComments'])
+        ...mapGetters(['getComments']),
+        ...mapGetters(['getUser'])
     },
     methods: {
         closeWarning() {
@@ -57,12 +53,12 @@ export default {
             this.showForm = true;
         },
         handlerCommentSubmit() {
-            if (this.inputName && this.inputComment) {
+            if (this.inputComment) {
 
                 const data = [
                     ...this.getComments,
                     {
-                        user: this.inputName,
+                        user: this.getUser.name,
                         date: getCurrentDate(),
                         text: this.inputComment
                     }
