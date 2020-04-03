@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!authorized" class="wrapper-authorization">
+        <div v-if="!userAuthorized" class="wrapper-authorization">
             <ui-button
                 class="btn"
                 @click.native="handlerAuthorization"
@@ -19,10 +19,13 @@
 </template>
 
 <script>
+import { fetchUsers } from '../api/usersService'
+
 export default {
     data() {
         return {
-            authorized: false,
+            userAuthorized: false,
+            users: null,
         };
     },
     methods: {
@@ -32,6 +35,12 @@ export default {
         handlerRegistration() {
             alert('handlerRegistration');
         },
+    },
+    created() {
+        fetchUsers()
+            .then(res => res.json())
+            .then(data => this.users = data)
+            .catch(error => console.log(error))
     }
 }
 </script>
