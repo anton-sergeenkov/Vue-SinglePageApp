@@ -6,7 +6,12 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         comments: [],
-        user: null,
+        user: {
+           authorized: false,
+           login: '',
+           password: '',
+           name: ''
+        },
     },
     getters: {
         getComments(state) {

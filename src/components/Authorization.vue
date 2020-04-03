@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!userAuthorized" class="wrapper-authorization">
+        <div v-if="!getUser.authorized" class="wrapper-authorization">
             <ui-button
                 class="btn"
                 @click.native="handlerAuthorization"
@@ -40,12 +40,12 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { fetchUsers } from '../api/usersService'
 
 export default {
     data() {
         return {
-            userAuthorized: false,
             users: null,
             openModal: false,
             inputName: '',
@@ -54,7 +54,11 @@ export default {
             userName: null
         };
     },
+    computed: {
+        ...mapGetters(['getUser'])
+    },
     methods: {
+        ...mapActions(['setUser']),
         closeWarning() {
             this.showWarning = false;
         },
@@ -69,7 +73,12 @@ export default {
                 if (password == this.inputPassword) {
                     this.closeModal();
                     this.userName = name;
-                    this.userAuthorized = true;
+                    this.setUser({
+                        authorized: true,
+                        login: this.inputName,
+                        password,
+                        name
+                    });
                 } else {
                     this.showWarning = true;
                 }
