@@ -8,10 +8,10 @@ export const getCurrentDate = () => {
     const nowDate = new Date();
 
     const year     = nowDate.getFullYear();
-    const month    = checkCharsCount(nowDate.getMonth());
+    const month    = checkCharsCount(nowDate.getMonth() + 1);
     const day      = checkCharsCount(nowDate.getDate());
     const hour     = checkCharsCount(nowDate.getHours());
-    const minutes  = nowDate.getMinutes();
+    const minutes  = checkCharsCount(nowDate.getMinutes());
 
     const fullDate = `${year}.${month}.${day} ${hour}:${minutes}`;
     return fullDate;

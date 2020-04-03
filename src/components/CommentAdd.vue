@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { getCurrentDate } from '../utils/getCurrentDate';
 
 export default {
@@ -45,6 +46,9 @@ export default {
             showWarning: false
         }
     },
+    computed: {
+        ...mapGetters(['getComments'])
+    },
     methods: {
         closeWarning() {
             this.showWarning = false;
@@ -54,11 +58,23 @@ export default {
         },
         handlerCommentSubmit() {
             if (this.inputName && this.inputComment) {
+
+                const data = [
+                    ...this.getComments,
+                    {
+                        user: this.inputName,
+                        date: getCurrentDate(),
+                        text: this.inputComment
+                    }
+                ];
+
+                this.setComments(data);
                 this.showForm = false;
             } else {
                 this.showWarning = true;
             }
         },
+        ...mapActions(['setComments'])
     }
 }
 </script>
