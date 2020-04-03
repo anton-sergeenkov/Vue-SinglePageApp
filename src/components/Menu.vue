@@ -4,16 +4,16 @@
             <li><router-link :to="{name: 'index'}" class="link-menu">Главная</router-link></li>
             <li><router-link :to="{name: 'article'}" class="link-menu">Статья</router-link></li>
         </ul>
-        <app-authorization></app-authorization>
+        <app-user></app-user>
     </div>
 </template>
 
 <script>
-import Authorization from './Authorization.vue'
+import User from './User.vue'
 
 export default {
     components: {
-        'app-authorization': Authorization
+        'app-user': User
     }
 }
 </script>
