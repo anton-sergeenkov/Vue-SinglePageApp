@@ -1,23 +1,23 @@
 <template>
     <div>
-        <ui-dialog @close="close">
+        <ui-dialog @close="closeModal">
             <template v-slot:header>Регистрация</template>
             <template v-slot:form>
-                <form @submit.prevent="checkFormRegistration" class="wrapper-form">
+                <form @submit.prevent="checkForm" class="wrapper-form">
                     <div>
-                        <ui-input class="form-input-comment" v-model="inputRegistration.login" label="Логин*" />
-                        <ui-input class="form-input-comment" v-model="inputRegistration.password" label="Пароль*" type="password" />
-                        <ui-input class="form-input-comment" v-model="inputRegistration.name" label="Отображаемое имя*" />
+                        <ui-input class="form-input-comment" v-model="forms.login" label="Логин*" />
+                        <ui-input class="form-input-comment" v-model="forms.password" label="Пароль*" type="password" />
+                        <ui-input class="form-input-comment" v-model="forms.name" label="Отображаемое имя*" />
                     </div>
                     <div class="wrapper-form-btn">
-                        <ui-button class="form-btn" label="Отмена" @click.native.prevent="close" />
+                        <ui-button class="form-btn" label="Отмена" @click.native.prevent="closeModal" />
                         <ui-button class="form-btn" label="Ок" theme="primary" />
                     </div>
                 </form>
             </template>
         </ui-dialog>
 
-        <ui-toast v-if="showWarningRegistration" theme="error" @close="closeWarningRegistration">
+        <ui-toast v-if="showWarning" theme="error" @close="closeWarning">
             Заполните все поля
         </ui-toast>
     </div>
@@ -29,12 +29,12 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     data() {
         return {
-            inputRegistration: {
+            forms: {
                 login: '',
                 password: '',
                 name: ''
             },
-            showWarningRegistration: false,
+            showWarning: false,
         };
     },
     computed: {
@@ -43,13 +43,13 @@ export default {
     methods: {
         ...mapActions(['setUser']),
 
-        close() {
+        closeModal() {
             this.$emit('close');
         },
-        checkFormRegistration() {
-            const inputLogin = this.inputRegistration.login;
-            const inputPassword = this.inputRegistration.password;
-            const inputName = this.inputRegistration.name;
+        checkForm() {
+            const inputLogin = this.forms.login;
+            const inputPassword = this.forms.password;
+            const inputName = this.forms.name;
 
             if (inputLogin && inputPassword && inputName) {
                 this.setUser({
@@ -59,13 +59,13 @@ export default {
                     name: inputName
                 });
 
-                this.close();
+                this.closeModal();
             } else {
-                this.showWarningRegistration = true;
+                this.showWarning = true;
             }
         },
-        closeWarningRegistration() {
-            this.showWarningRegistration = false;
+        closeWarning() {
+            this.showWarning = false;
         },
     }
 }

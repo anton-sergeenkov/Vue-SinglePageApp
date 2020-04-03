@@ -1,22 +1,22 @@
 <template>
     <div>
-        <ui-dialog @close="close">
+        <ui-dialog @close="closeModal">
             <template v-slot:header>Авторизация</template>
             <template v-slot:form>
-                <form @submit.prevent="checkFormAuthorization" class="wrapper-form">
+                <form @submit.prevent="checkForm" class="wrapper-form">
                     <div>
-                        <ui-input class="form-input-comment" v-model="inputAuthorization.login" label="Логин*" />
-                        <ui-input class="form-input-comment" v-model="inputAuthorization.password" label="Пароль*" type="password" />
+                        <ui-input class="form-input-comment" v-model="forms.login" label="Логин*" />
+                        <ui-input class="form-input-comment" v-model="forms.password" label="Пароль*" type="password" />
                     </div>
                     <div class="wrapper-form-btn">
-                        <ui-button class="form-btn" label="Отмена" @click.native.prevent="close" />
+                        <ui-button class="form-btn" label="Отмена" @click.native.prevent="closeModal" />
                         <ui-button class="form-btn" label="Ок" theme="primary" />
                     </div>
                 </form>
             </template>
         </ui-dialog>
 
-        <ui-toast v-if="showWarningAuthorization" theme="error" @close="closeWarningAuthorization">
+        <ui-toast v-if="showWarning" theme="error" @close="closeWarning">
             Неверный логин или пароль
         </ui-toast>
     </div>
@@ -30,11 +30,11 @@ export default {
     data() {
         return {
             users: null,
-            inputAuthorization: {
+            forms: {
                 login: '',
                 password: '',
             },
-            showWarningAuthorization: false,
+            showWarning: false,
         };
     },
     computed: {
@@ -43,19 +43,19 @@ export default {
     methods: {
         ...mapActions(['setUser']),
 
-        close() {
+        closeModal() {
             this.$emit('close');
         },
-        checkFormAuthorization() {
-            const inputLogin = this.inputAuthorization.login;
-            const inputPassword = this.inputAuthorization.password;
+        checkForm() {
+            const inputLogin = this.forms.login;
+            const inputPassword = this.forms.password;
 
             if (this.users[inputLogin]) {
                 const password = this.users[inputLogin].password;
                 const name = this.users[inputLogin].name;
 
                 if (password == inputPassword) {
-                    this.close();
+                    this.closeModal();
                     this.setUser({
                         authorized: true,
                         login: inputLogin,
@@ -63,14 +63,14 @@ export default {
                         name
                     });
                 } else {
-                    this.showWarningAuthorization = true;
+                    this.showWarning = true;
                 }
             } else {
-                this.showWarningAuthorization = true;
+                this.showWarning = true;
             }
         },
-        closeWarningAuthorization() {
-            this.showWarningAuthorization = false;
+        closeWarning() {
+            this.showWarning = false;
         },
     },
     created() {
